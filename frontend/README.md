@@ -1,16 +1,67 @@
-# React + Vite
+# LearnHub
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+LearnHub is a simple full-stack web application built with React and Node.js.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+* User authentication (Login)
+* View courses
+* Add new courses
 
-## React Compiler
+## Technologies Used
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Frontend:
 
-## Expanding the ESLint configuration
+* React
+* Axios
+* React Router
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Backend:
+
+* Node.js
+* Express
+* MongoDB
+
+## Project Structure
+
+* frontend/ → React application
+* backend/ → Node.js API
+
+## Installation
+
+### 1. Clone the project
+
+git clone <https://github.com/Bellam-Imane/LearnHub.git>
+
+### 2. Install dependencies
+
+Frontend:
+cd frontend
+npm install
+
+Backend:
+cd backend
+npm install
+
+### 3. Run the project
+
+Backend:
+npm start
+
+Frontend:
+npm start
+
+## API Endpoints
+
+* POST /api/v1/auth/login
+* GET /api/v1/courses
+* POST /api/v1/courses
+
+## Project Goal
+
+This is a mini project to demonstrate a simple full-stack application with authentication and CRUD operations.
+
+## Authors
+
+* El mouden fatima-ezzahra 
+* Bellam-Imane
