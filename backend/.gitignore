@@ -1,0 +1,8 @@
+# Les dépendances (les dossiers lourds)
+node_modules/
+
+# Les fichiers de configuration sensibles
+.env
+
+# Notre base de données locale temporaire
+users.json

@@ -1,3 +1,56 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  color: #d5dde9;
+  background:
+    radial-gradient(circle at top, rgba(79, 140, 255, 0.24), transparent 36%),
+    linear-gradient(180deg, #08111f 0%, #0e1728 100%);
+  font-family: Inter, 'Segoe UI', Arial, sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background: inherit;
+}
+
+#root {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  color: inherit;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+button,
+a {
+  font: inherit;
+}
+
