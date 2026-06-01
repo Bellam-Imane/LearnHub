@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios"; 
+import axios from "axios";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -17,55 +17,63 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     try {
-      // 💡 ENVOI RÉEL : Vérifier les identifiants auprès de l'API de connexion (Port 5000)
+      // Envoi des identifiants vers l'API de connexion du backend (Port 5000)
       const response = await axios.post("http://localhost:5000/api/auth/login", formData);
-      
-      // Si la connexion est réussie et le backend valide l'utilisateur
+
       if (response.data) {
-        console.log("Connexion réussie ! Bienvenue sur Learn Hub ", response.data);
-        
-        // Stocker le token d'authentification pour sécuriser les futures requêtes
+        // Stocker le token JWT pour sécuriser les futures requêtes
         if (response.data.token) {
           localStorage.setItem("token", response.data.token);
         }
 
-        // Redirection sécurisée vers le Dashboard après vérification
+        // Stocker les informations de l'utilisateur pour les afficher dans le Header
+        if (response.data.user) {
+          localStorage.setItem("user", JSON.stringify(response.data.user));
+        }
+
+        // Redirection vers le Dashboard après connexion réussie
         navigate("/dashboard");
       }
     } catch (error) {
-      // Afficher l'erreur renvoyée par le backend (ex: Mot de passe incorrect)
+      // Afficher le message d'erreur renvoyé par le backend
       console.error("Erreur de connexion :", error.response?.data?.message || error.message);
       alert(error.response?.data?.message || "Email ou mot de passe incorrect !");
     }
   };
 
   return (
-    /* Arrière-plan dynamique et moderne (Identique à la Landing et Register) */
     <div className="min-h-screen bg-gradient-to-br from-[#f4f7fe] via-[#ffffff] to-[#eef2ff] flex items-center justify-center p-6 font-['Inter'] relative overflow-hidden">
-      
-      {/* Cercles décoratifs flous en arrière-plan */}
+
+      {/* Cercles décoratifs en arrière-plan */}
       <div className="absolute -top-10 -left-10 w-72 h-72 bg-[#6a5acd]/10 rounded-full blur-3xl -z-10"></div>
       <div className="absolute -bottom-10 -right-10 w-72 h-72 bg-[#ffc107]/10 rounded-full blur-3xl -z-10"></div>
 
-      {/* Boite principale du formulaire (Design épuré) */}
+      {/* Boîte principale du formulaire */}
       <div className="w-full max-w-md bg-white/80 backdrop-blur-md border border-white p-10 rounded-[32px] shadow-[0_20px_50px_rgba(0,0,0,0.05)]">
-        
+
         {/* Logo / Titre */}
         <div className="text-center mb-8">
-          <h2 onClick={() => navigate("/")} className="text-3xl font-extrabold text-[#6a5acd] tracking-tighter cursor-pointer inline-block">
+          <h2
+            onClick={() => navigate("/")}
+            className="text-3xl font-extrabold text-[#6a5acd] tracking-tighter cursor-pointer inline-block"
+          >
             Learn Hub
           </h2>
-          <p className="text-gray-500 text-sm mt-2 font-medium">Welcome back! Sign in to your account</p>
+          <p className="text-gray-500 text-sm mt-2 font-medium">
+            Welcome back! Sign in to your account
+          </p>
         </div>
 
         {/* Formulaire de connexion */}
         <form onSubmit={handleSubmit} className="space-y-5">
-          
+
           {/* Champ Email */}
           <div>
-            <label className="block text-sm font-bold text-gray-700 mb-2">Email Address</label>
+            <label className="block text-sm font-bold text-gray-700 mb-2">
+              Email Address
+            </label>
             <input
               type="email"
               name="email"
@@ -79,7 +87,9 @@ export default function Login() {
 
           {/* Champ Password */}
           <div>
-            <label className="block text-sm font-bold text-gray-700 mb-2">Password</label>
+            <label className="block text-sm font-bold text-gray-700 mb-2">
+              Password
+            </label>
             <input
               type="password"
               name="password"
@@ -91,7 +101,7 @@ export default function Login() {
             />
           </div>
 
-          {/* Options supplémentaires : Remember me & Forgot Password */}
+          {/* Options : Remember me et Forgot Password */}
           <div className="flex items-center justify-between text-sm pt-1">
             <label className="flex items-center gap-2 cursor-pointer text-gray-600 font-medium">
               <input type="checkbox" className="accent-[#6a5acd] rounded" />
@@ -111,11 +121,14 @@ export default function Login() {
           </button>
         </form>
 
-        {/* Lien vers la page Register */}
+        {/* Lien vers la page d'inscription */}
         <div className="text-center mt-6">
           <p className="text-sm text-gray-500 font-medium">
             Don't have an account yet?{" "}
-            <button onClick={() => navigate("/register")} className="text-[#6a5acd] font-bold hover:underline">
+            <button
+              onClick={() => navigate("/register")}
+              className="text-[#6a5acd] font-bold hover:underline"
+            >
               Sign Up
             </button>
           </p>

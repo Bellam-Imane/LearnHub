@@ -24,7 +24,7 @@ const register = async (req, res) => {
 
     // Créer l'objet du nouvel utilisateur avec un ID unique basé sur le temps
     const newUser = {
-      _id: Date.now().toString(), // Simule l'identifiant unique généré par MongoDB
+      _id: Date.now().toString(),
       fullName,
       email,
       password: hashedPassword
@@ -34,9 +34,23 @@ const register = async (req, res) => {
     users.push(newUser);
     global.saveUsersToDB(users);
 
+    // Générer un token JWT directement après l'inscription
+    const token = jwt.sign(
+      { id: newUser._id },
+      process.env.JWT_SECRET,
+      { expiresIn: '24h' }
+    );
+
+    // Renvoyer le token et les infos de l'utilisateur au frontend
     res.status(201).json({
       success: true,
-      message: "Utilisateur créé avec succès !"
+      message: "Utilisateur créé avec succès !",
+      token,
+      user: {
+        id: newUser._id,
+        fullName: newUser.fullName,
+        email: newUser.email
+      }
     });
 
   } catch (error) {
@@ -72,14 +86,14 @@ const login = async (req, res) => {
       });
     }
 
-    // Générer un token de sécurité JWT (valable 24h) pour maintenir la session active
+    // Générer un token JWT valable 24h pour maintenir la session active
     const token = jwt.sign(
       { id: user._id },
       process.env.JWT_SECRET,
       { expiresIn: '24h' }
     );
 
-    // Renvoyer une réponse positive au Frontend avec le token et les infos de l'utilisateur
+    // Renvoyer le token et les infos de l'utilisateur au frontend
     res.json({
       success: true,
       token,
@@ -98,8 +112,18 @@ const login = async (req, res) => {
   }
 };
 
-// Exporter les fonctions pour les lier aux routes correspondantes
+// Fonction pour récupérer les informations du profil de l'utilisateur connecté
+const getProfile = (req, res) => {
+  // req.user est ajouté automatiquement par le middleware verifyToken
+  res.json({
+    success: true,
+    user: req.user
+  });
+};
+
+// Exporter les trois fonctions pour les lier aux routes correspondantes
 module.exports = {
   register,
-  login
+  login,
+  getProfile
 };

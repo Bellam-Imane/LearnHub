@@ -1,13 +1,16 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Navigate } from 'react-router-dom'
 
 // Importations des pages publiques (Design moderne en Anglais)
 import LandingPage from './pages/LandingPage.jsx';
 import Login from './pages/Login.jsx';
 import Register from './pages/Register.jsx';
 
+
 // Importations des composants du tableau de bord (Structure de ta collègue)
 import Sidebar from './components/Sidebar.jsx';
 import Header from './components/Header.jsx';
+import ProtectedRoute from './components/ProtectedRoute.jsx';
 
 // Importations des pages internes du Dashboard
 import Courses from './pages/Courses.jsx';
@@ -67,7 +70,11 @@ export default function App() {
           <Route path="/register" element={<Register />} />
 
           {/* 2. Espace Privé (Dashboard avec toutes ses sous-routes) */}
-          <Route path="/dashboard/*" element={<DashboardLayout />} />
+          <Route path="/dashboard/*" element={
+            <ProtectedRoute>
+              <DashboardLayout />
+            </ProtectedRoute>
+        } />
 
         </Routes>
       </Router>
